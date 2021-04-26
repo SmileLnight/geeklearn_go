@@ -10,12 +10,12 @@ import (
 var MyDB *sql.DB
 
 type Account struct {
-	id   int
-	name string
+	id     int
+	name   string
 	passwd string
 }
 
-func InitMysql()(err error)  {
+func InitMysql() (err error) {
 
 	dsn := "root:@(192.168.197.129:3306)/dbgolang?charset=utf8mb4&parseTime=True&loc=Local"
 	MyDB, err = sql.Open("mysql", dsn)
@@ -27,7 +27,7 @@ func InitMysql()(err error)  {
 	return MyDB.Ping()
 }
 
-func Close(){
+func Close() {
 	MyDB.Close()
 }
 
@@ -44,7 +44,6 @@ func QueryOneUser(id int) (*Account, error) {
 	return &account, nil
 }
 
-
 func main() {
 	InitMysql()
 	account, err := QueryOneUser(2021)
@@ -53,4 +52,5 @@ func main() {
 		return
 	}
 	fmt.Printf("Account: %#v", account)
+	Close()
 }
